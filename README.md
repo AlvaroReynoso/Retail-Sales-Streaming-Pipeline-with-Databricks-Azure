@@ -1,4 +1,4 @@
-# Retail-Sales-Streaming-Pipeline-with-Databricks-Azure
+# 🔷 Retail-Sales-Streaming-Pipeline-with-Databricks-Azure
 
 Este proyecto implementa un pipeline de procesamiento de datos en **tiempo casi real**, utilizando **Azure Event Hub**, **Azure Data Lake Storage Gen2 (ADLS)** y **Azure Databricks con Delta Lake**. El objetivo es construir una arquitectura escalable y moderna basada en el **modelo Medallón** (Bronze, Silver, Gold) para procesar, enriquecer y analizar eventos de transacciones de ventas en un mercado general.
 
@@ -10,7 +10,7 @@ Simular el procesamiento de transacciones de ventas emitidas en vivo por Event H
 
 ---
 
-## 🔷 Capas del Modelo Medallón
+##  Capas del Modelo Medallón
 
 ### 🟤 Bronze - Ingesta cruda en streaming
 - Lee eventos JSON en tiempo casi real desde Azure Event Hub.
