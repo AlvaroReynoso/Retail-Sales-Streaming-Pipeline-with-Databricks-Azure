@@ -1,3 +1,12 @@
+# Retail-Sales-Streaming-Pipeline-with-Databricks-Azure
+
+Este proyecto implementa un pipeline de procesamiento de datos en **tiempo casi real**, utilizando **Azure Event Hub**, **Azure Data Lake Storage Gen2 (ADLS)** y **Azure Databricks con Delta Lake**. El objetivo es construir una arquitectura escalable y moderna basada en el **modelo Medallón** (Bronze, Silver, Gold) para procesar, enriquecer y analizar eventos de transacciones de ventas en un mercado general.
+
+---
+
+## 📌 Objetivo
+
+Simular el procesamiento de transacciones de ventas emitidas en vivo por Event Hub, limpiarlas, enriquecerlas con información externa (productos, tiendas, canales, clientes), y generar indicadores clave de negocio (KPIs) como ventas por día, mejores clientes y productos más vendidos.
 
 ---
 
@@ -12,7 +21,7 @@
 ### ⚪ Silver - Limpieza y enriquecimiento
 - Elimina duplicados, datos inválidos y normaliza campos.
 - Genera un hash de la transacción (`transaction_hash`) y clasifica el ticket (`ticket_category`).
-- Une con tablas batch externas:
+- Une con tablas batch externas mediante Joins (LEFT):
   - `products.csv`, `stock.csv`, `stores.csv`, `channels.csv`, `customers.csv`.
 - Produce dos salidas:
   - **Silver Simple**: transacciones limpias, sin enriquecimiento.
@@ -24,6 +33,7 @@
 ### 🟡 Gold - KPIs de negocio
 Agrupaciones y métricas construidas en batch a partir de la Silver enriquecida.
 
+#### Algunas metricas son:
 #### 1. `sales_by_day`
 - Total de transacciones, monto total y ticket promedio por día, canal y región.
 - `/mnt/gold/sales/sales_by_day`
@@ -35,17 +45,10 @@ Agrupaciones y métricas construidas en batch a partir de la Silver enriquecida.
 #### 3. `product_performance`
 - Productos más vendidos, ingresos generados y ticket promedio por producto.
 - `/mnt/gold/sales/product_performance`
-
 ---
 
-## ⏱️ ¿Por qué este pipeline es "Casi Tiempo Real"?
-
-Este pipeline utiliza **Spark Structured Streaming**, que opera en **micro-lotes** (por defecto cada 1 segundo), lo que permite procesar grandes volúmenes de datos casi en tiempo real.
-
-### ¿Qué lo diferencia del "tiempo real"?
-
-- En **tiempo real**, el sistema reacciona en milisegundos sin buffer ni almacenamiento intermedio (ej: airbag o detección de fraude).
-- En **casi tiempo real** (como este caso), hay una **mínima latencia** debido al procesamiento por lotes pequeños, escritura en Delta Lake y uso de checkpoints.
+## ⏱️ Este pipeline utiliza **Spark Structured Streaming** 
+#### Opera en **micro-lotes** (por defecto cada 5 segundo), lo que permite procesar grandes volúmenes de datos casi en tiempo real.
 - Este enfoque es **ideal para análisis, monitoreo y visualización** sin necesidad de respuestas inmediatas.
 
 ---
@@ -76,7 +79,7 @@ Este pipeline utiliza **Spark Structured Streaming**, que opera en **micro-lotes
 | Tecnología         | Rol                                  |
 |-------------------|---------------------------------------|
 | Azure Event Hub    | Ingesta de eventos en tiempo real     |
-| Azure Data Lake Gen2 | Almacenamiento por capas              |
+| Azure ADLS Gen2    | Almacenamiento por capas              |
 | Azure Databricks   | Procesamiento distribuido con Spark   |
 | Delta Lake         | Formato transaccional con versionado  |
 | Structured Streaming | Procesamiento casi en tiempo real     |
@@ -84,6 +87,4 @@ Este pipeline utiliza **Spark Structured Streaming**, que opera en **micro-lotes
 | Mount / Secrets    | Acceso seguro a Storage y Event Hub   |
 
 ---
-
-## 📁 Estructura de carpetas
 
