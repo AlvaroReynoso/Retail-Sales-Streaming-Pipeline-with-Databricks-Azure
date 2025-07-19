@@ -85,7 +85,7 @@ Agrupaciones y métricas construidas en batch a partir de la Silver enriquecida.
 | Structured Streaming | Procesamiento casi en tiempo real     |
 | PySpark            | Transformaciones y lógica de negocio  |
 | Mount / Secrets    | Acceso seguro a Storage y Event Hub   |
-| Arquitectura LakeHouse | Delta Lake sobre Azure Data Lake Storage |
+| Arquitectura Lakehouse | Delta Lake sobre Azure Data Lake Storage |
 
 ---
 
